@@ -37,7 +37,9 @@ class Rocapay
     {
         $url = $this->apiBaseUrl . '/crypto-currencies';
 
-        return $this->executeRequest($url);
+        $response = $this->executeRequest($url);
+
+        return $response['cryptoCurrencies'];
     }
 
     /**
@@ -50,20 +52,22 @@ class Rocapay
     {
         $url = $this->apiBaseUrl . '/fiat-currencies';
 
-        return $this->executeRequest($url);
+        $response = $this->executeRequest($url);
+
+        return $response['currencies'];
     }
 
     /**
      * Create a payment
      *
-     * @param string|float $amount
+     * @param string|float $amount Amount of the payment
      * @param string $fiatCurrency Symbol used to specify the fiat currency (ISO 4217)
      * @param string $callbackUrl URL on which JSON notifications will be received about the payment
+     * @param string $description Description of the payment
+     * @param string $cryptoCurrency Symbol used to specify the crypto currency
      * @param string $successUrl Redirect URL after a successful payment in the widget
      * @param string $failUrl Redirect URL after a failed payment in the widget
      * @param string $cancelUrl Redirect URL after clicking the Return to Merchant button in the widget
-     * @param string $description Description of the payment
-     * @param string $cryptoCurrency Symbol used to specify the crypto currency
      * @return array
      * @throws Exception
      */
