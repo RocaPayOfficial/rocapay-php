@@ -60,40 +60,22 @@ class Rocapay
     /**
      * Create a payment
      *
-     * @param string|float $amount Amount of the payment
-     * @param string $fiatCurrency Symbol used to specify the fiat currency (ISO 4217)
-     * @param string $callbackUrl URL on which JSON notifications will be received about the payment
-     * @param string $description Description of the payment
-     * @param string $cryptoCurrency Symbol used to specify the crypto currency
-     * @param string $successUrl Redirect URL after a successful payment in the widget
-     * @param string $failUrl Redirect URL after a failed payment in the widget
-     * @param string $cancelUrl Redirect URL after clicking the Return to Merchant button in the widget
+     * @param array $params Array containing the payment's parameters
+     *      $params = array(
+     *          'amount'         => (string|float) Amount of the payment
+     *          'currency'       => (string) Symbol used to specify the fiat currency (ISO 4217),
+     *          'cryptoCurrency' => (string) Symbol used to specify the crypto currency,
+     *          'callbackUrl'    => (string) URL on which JSON notifications will be received about the payment,
+     *          'description'    => (string) Description of the payment,
+     *          'successUrl'     => (string) Redirect URL after a successful payment in the widget,
+     *          'failUrl'        => (string) Redirect URL after a failed payment in the widget,
+     *          'cancelUrl'      => (string) Redirect URL after clicking the Return to Merchant button in the widget
+     *      )
      * @return array
      * @throws Exception
      */
-    public function createPayment(
-        $amount,
-        $fiatCurrency,
-        $callbackUrl = '',
-        $description = '',
-        $cryptoCurrency = '',
-        $successUrl = '',
-        $failUrl = '',
-        $cancelUrl = ''
-    ) {
+    public function createPayment($params) {
         $url = $this->apiBaseUrl . '/payment';
-
-        $params = array(
-            'token' => $this->apiAuthToken,
-            'amount' => $amount,
-            'currency' => $fiatCurrency,
-            'cryptoCurrency' => $cryptoCurrency,
-            'callbackUrl' => $callbackUrl,
-            'description' => $description,
-            'successUrl' => $successUrl,
-            'failUrl' => $failUrl,
-            'cancelUrl' => $cancelUrl
-        );
 
         return $this->executeRequest($url, true, $params);
     }
@@ -110,7 +92,7 @@ class Rocapay
         $url = $this->apiBaseUrl . '/payment-type';
 
         $params = array(
-            'token' => $this->apiAuthToken,
+            'token'     => $this->apiAuthToken,
             'paymentId' => $paymentId
         );
 
@@ -126,12 +108,12 @@ class Rocapay
      * @return array
      * @throws Exception
      */
-    private function executeRequest($url, $isPost = true, $params = null)
+    private function executeRequest($url, $isPost = true, $params = array())
     {
         $curl = curl_init();
 
         $curlOptions = array(
-            CURLOPT_URL => $url,
+            CURLOPT_URL            => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => false
         );

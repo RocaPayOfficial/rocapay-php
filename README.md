@@ -24,20 +24,22 @@ Then you have to create a widget and use the API key provided under the implemen
 ```php
  <?php
  $rocapay = new \Rocapay\Rocapay($apiKey);
- $amount = '12.00'; // Amount of the payment
- $fiatCurrency = 'USD'; // Symbol used to specify the fiat currency (ISO 4217)
- $callbackUrl = 'https://yoursite.com/callback-url'; // URL on which JSON notifications will be received about the payment (Optional if a global one is set from the user dashboard)
- $description = 'Order #0291092'; // Description of the payment (Optional)
- $cryptoCurrency = 'BTC'; // Symbol used to specify the crypto currency (Optional)
- $successUrl = 'https://yoursite.com/success-url'; // Redirect URL after a successful payment in the widget (Optional if a global one is set from the user dashboard)
- $failUrl = 'https://yoursite.com/fail-url'; // Redirect URL after a failed payment in the widget (Optional if a global one is set from the user dashboard)	
- $cancelUrl = 'https://yoursite.com/cancel-url'; // Redirect URL after clicking the Return to Merchant button in the widget (Optional if a global one is set from the user dashboard)	
- $payment = $rocapay->createPayment($amount, $fiatCurrency, $callbackUrl, $description, $cryptoCurrency, $successUrl, $failUrl, $cancelUrl);
+ $params = array(
+    'amount'         => '12.00', // Amount of the payment
+    'fiatCurrency'   => 'USD', // Symbol used to specify the fiat currency (ISO 4217)
+    'callbackUrl'    => 'https://yoursite.com/callback-url', // URL on which JSON notifications will be received about the payment (Optional if a global one is set from the user dashboard)
+    'description'    => 'Order #0291092', // Description of the payment (Optional)
+    'cryptoCurrency' => 'BTC', // Symbol used to specify the crypto currency (Optional)
+    'successUrl'     => 'https://yoursite.com/success-url', // Redirect URL after a successful payment in the widget (Optional if a global one is set from the user dashboard)
+    'failUrl'        => 'https://yoursite.com/fail-url', // Redirect URL after a failed payment in the widget (Optional if a global one is set from the user dashboard)	
+    'cancelUrl'      => 'https://yoursite.com/cancel-url', // Redirect URL after clicking the Return to Merchant button in the widget (Optional if a global one is set from the user dashboard)	
+ );
+ $payment = $rocapay->createPayment($params);
 ```
 ## Available methods
 
  - `getCryptoCurrencies()`: Gets a list of supported crypto currencies.
  - `getFiatCurrencies()`: Gets a list of supported fiat currencies.
- - `createPayment($amount, $fiatCurrency, $callbackUrl, $description, $cryptoCurrency, $successUrl, $failUrl, $cancelUrl)`: Creates a payment.
+ - `createPayment($params)`: Creates a payment.
  - `checkPayment($paymentId)`: Fetches a payment's status.
 
