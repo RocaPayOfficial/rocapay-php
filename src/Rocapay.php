@@ -76,6 +76,7 @@ class Rocapay
      */
     public function createPayment($params) {
         $url = $this->apiBaseUrl . '/payment';
+        $params = array_merge($params, array('token' => $this->apiAuthToken));
 
         return $this->executeRequest($url, true, $params);
     }
