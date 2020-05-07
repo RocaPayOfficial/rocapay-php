@@ -58,18 +58,34 @@ class Rocapay
     }
 
     /**
+     * Gets a list of supported auto convert currency pairs
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function getAutoConvertCurrencyPairs()
+    {
+        $url = $this->apiBaseUrl . '/auto-convert-currency-pairs';
+
+        $response = $this->executeRequest($url);
+
+        return $response['pairs'];
+    }
+
+    /**
      * Create a payment
      *
      * @param array $params Array containing the payment's parameters
      *      $params = array(
-     *          'amount'         => (string|float) Amount of the payment
-     *          'currency'       => (string) Symbol used to specify the fiat currency (ISO 4217),
-     *          'cryptoCurrency' => (string) Symbol used to specify the crypto currency,
-     *          'callbackUrl'    => (string) URL on which JSON notifications will be received about the payment,
-     *          'description'    => (string) Description of the payment,
-     *          'successUrl'     => (string) Redirect URL after a successful payment in the widget,
-     *          'failUrl'        => (string) Redirect URL after a failed payment in the widget,
-     *          'cancelUrl'      => (string) Redirect URL after clicking the Return to Merchant button in the widget
+     *          'amount'            => (string|float) Amount of the payment
+     *          'currency'          => (string) Symbol used to specify the fiat currency (ISO 4217),
+     *          'cryptoCurrency'    => (string) Symbol used to specify the crypto currency,
+     *          'convertToCurrency' => (string) 'EUR', Symbol used to specify the currency to which the crypto currency will be converted to. A list of supported convertable currency pairs can be obtained through the `getAutoConvertCurrencyPairs` method (Optional)
+     *          'callbackUrl'       => (string) URL on which JSON notifications will be received about the payment,
+     *          'description'       => (string) Description of the payment,
+     *          'successUrl'        => (string) Redirect URL after a successful payment in the widget,
+     *          'failUrl'           => (string) Redirect URL after a failed payment in the widget,
+     *          'cancelUrl'         => (string) Redirect URL after clicking the Return to Merchant button in the widget
      *      )
      * @return array
      * @throws Exception
