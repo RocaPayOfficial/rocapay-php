@@ -67,7 +67,7 @@ class Rocapay
     {
         $url = $this->apiBaseUrl . '/auto-convert-currency-pairs';
 
-        $response = $this->executeRequest($url);
+        $response = $this->executeRequest($url, false);
 
         return $response['pairs'];
     }
